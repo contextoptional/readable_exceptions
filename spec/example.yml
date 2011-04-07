@@ -1,0 +1,6 @@
+"An::Exception":
+  input_context: "There has been an input failure"
+  output_context: "There has been an output failure"
+
+"Another::Exception":
+  print_context: "We can not print right now"
