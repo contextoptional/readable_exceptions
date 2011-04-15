@@ -4,3 +4,6 @@
 
 "Another::Exception":
   print_context: "We can not print right now"
+
+"ChildException":
+  print_context: "We can print right now"
