@@ -58,6 +58,11 @@ describe ReadableExceptions do
         e.readable_message(:unknown_context).should == "test"
       end
 
+      it "neither the exception nor its parents have readable message defined for this context" do
+        e = ChildException.new("test")
+        e.readable_message(:uknown_context).should == "test"
+      end
+
     end
 
     describe "returns the exception's readable message when" do
@@ -68,6 +73,8 @@ describe ReadableExceptions do
         An::Exception.new.readable_message(:output_context).should == "There has been an output failure"
         Another::Exception.new.readable_message(:print_context).should == "We can not print right now"
         ChildException.new.readable_message(:print_context).should == "We can print right now"
+        Another::Exception.new.readable_message(:post_context).should == "We can not post right now"
+        ChildException.new.readable_message(:post_context).should == "We can not post right now"
       end
 
       it "an exception is instantiated with its message set to a readable message key" do
@@ -93,6 +100,18 @@ describe ReadableExceptions do
           raise ChildException, :print_context
         rescue Exception => e
           e.readable_message.should == "We can print right now"
+        end
+
+        begin
+          raise Another::Exception, :post_context
+        rescue Exception => e
+          e.readable_message.should == "We can not post right now"
+        end
+
+        begin
+          raise ChildException, :post_context
+        rescue Exception => e
+          e.readable_message.should == "We can not post right now"
         end
       end
 

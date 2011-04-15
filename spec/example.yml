@@ -4,6 +4,7 @@
 
 "Another::Exception":
   print_context: "We can not print right now"
+  post_context: "We can not post right now"
 
 "ChildException":
   print_context: "We can print right now"

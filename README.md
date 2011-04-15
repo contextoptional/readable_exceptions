@@ -2,34 +2,75 @@
 
 Given a configured exception type and error context, returns a human readable error message.
 
+# Configure it
+
+    "WallPostException":
+      wall_context: "We can not post to your wall"
+      friend_wall_context: "We can not post to your friends wall"
+
+    "WallPostException::IntermittentError":
+      wall_context: "We can not post to your wall right now. We'll try again later."
+
+WallPostException::IntermittentError is a child class of WallPostException.
+
 # Set it up
 
     ReadableExceptions.setup(File.dirname(__FILE__) + "/examples.yml")
 
-See spec/example.yml for an example of the input file format.
-
 # Use it
 
     begin
-      raise ::InvitesController::MissingParams, :missing_facebook_id
-    rescue StandardError => e  # rescued a known error
-      puts e.readable_message  # prints a human readable error message
+      post_to_wall()
+    rescue WallPostException => e
+      puts e.readable_message(:wall_context)  # puts "We can not post to your wall"
     end
 
     begin
-      some_random_gem_method()
-    rescue StandardError => e  # rescued an uknown error
-      puts e.readable_message  # prints e.message
+      post_to_friends_wall()
+    rescue WallPostException => e
+      puts e.readable_message(:friend_wall_context)  # puts "We can not post to your friends wall"
     end
 
     begin
-      moderate_facebook()
-    rescue ::Facebooker::Session::UserNotVisibleError => e
-      puts e.readable_message(:facebook_moderation)  # prints a human readable error message relevant to moderation
+      post_to_wall()
+    rescue WallPostException::IntermittentError => e
+      puts e.readable_message(:wall_context)  # puts "We can not post to your wall right now. We'll try again later."
     end
 
     begin
-      publish_facebook()
-    rescue ::Facebooker::Session::UserNotVisibleError => e
-      puts e.readable_message(:facebook_publishing)  # prints a human readable error message relevant to publishing
+      post_to_friends_wall()
+    rescue WallPostException::IntermittentError => e
+      puts e.readable_message(:friend_wall_context)  # puts "We can not post to your friends wall"
     end
+
+    begin
+      raise WallPostException, :wall_context
+    rescue StandardError => e
+      puts e.readable_message  # puts "We can not post to your wall"
+    end
+
+    begin
+      raise WallPostException, :friend_wall_context
+    rescue StandardError => e
+      puts e.readable_message  # puts "We can not post to your friends wall"
+    end
+
+    begin
+      raise WallPostException::IntermittentError, :wall_context
+    rescue StandardError => e
+      puts e.readable_message  # puts "We can not post to your wall right now. We'll try again later."
+    end
+
+    begin
+      raise WallPostException::IntermittentError, :friend_wall_context
+    rescue StandardError => e
+      puts e.readable_message  # puts "We can not post to your friends wall"
+    end
+
+    begin
+      raise UnconfiguredException, :wall_context
+    rescue StandardError => e
+      puts e.readable_message  # puts e.message
+    end
+
+
