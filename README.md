@@ -1,9 +1,14 @@
 # Overview
 
 Given a configured exception type and error context, returns a human readable error message.
-Messages are defined in error_messages.yml.
 
-# Examples
+# Set it up
+
+    ReadableExceptions.setup(File.dirname(__FILE__) + "/examples.yml")
+
+See spec/example.yml for an example of the input file format.
+
+# Use it
 
     begin
       raise ::InvitesController::MissingParams, :missing_facebook_id
