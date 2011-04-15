@@ -4,6 +4,8 @@ Given a configured exception type and error context, returns a human readable er
 
 # Configure it
 
+Create your configuration file, readable_exceptions.yml.
+
     "WallPostException":
       wall_context: "We can not post to your wall"
       friend_wall_context: "We can not post to your friends wall"
@@ -13,11 +15,9 @@ Given a configured exception type and error context, returns a human readable er
 
 WallPostException::IntermittentError is a child class of WallPostException.
 
-# Set it up
-
-    ReadableExceptions.setup(File.dirname(__FILE__) + "/examples.yml")
-
 # Use it
+
+    ReadableExceptions.setup(File.dirname(__FILE__) + "/readable_exceptions.yml")
 
     begin
       post_to_wall()
