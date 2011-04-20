@@ -1,10 +1,12 @@
-"An::Exception":
-  input_context: "There has been an input failure"
-  output_context: "There has been an output failure"
+foo:
+  "An::Exception":
+    input_context: "There has been an input failure"
+    output_context: "There has been an output failure"
 
-"Another::Exception":
-  print_context: "We can not print right now"
-  post_context: "We can not post right now"
+bar:
+  "Another::Exception":
+    print_context: "We can not print right now"
+    post_context: "We can not post right now"
 
-"ChildException":
-  print_context: "We can print right now"
+  "ChildException":
+    print_context: "We can print right now"
