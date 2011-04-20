@@ -6,13 +6,13 @@ Given a configured exception type and error context, returns a human readable er
 
 Create your configuration file, readable_exceptions.yml.
 
-  publishing:
-    "WallPostException":
-      wall_context: "We can not post to your wall"
-      friend_wall_context: "We can not post to your friends wall"
+    publishing:
+      "WallPostException":
+        wall_context: "We can not post to your wall"
+        friend_wall_context: "We can not post to your friends wall"
 
-    "WallPostException::IntermittentError":
-      wall_context: "We can not post to your wall right now. We'll try again later."
+      "WallPostException::IntermittentError":
+        wall_context: "We can not post to your wall right now. We'll try again later."
 
 WallPostException::IntermittentError is a child class of WallPostException.
 
