@@ -15,7 +15,7 @@ module ReadableExceptions
   def self.readable_message(exception, context = nil)
     context = exception.message if context.nil?
 
-    return exception.message if ! valid_context?(exception, context)
+    return exception.message if ! valid_context?(context)
 
     readable_message = message_for_context(exception.class, context)
 
@@ -39,12 +39,8 @@ module ReadableExceptions
     error_messages
   end
   
-  def self.valid_context?(exception, context)
-    if context.nil?
-      exception.message.kind_of?(Hash) && exception.message.size == 1
-    else
-      context.kind_of?(Hash) && context.size == 1
-    end
+  def self.valid_context?(context)
+    context.kind_of?(Hash) && context.size == 1
   end
 
   def self.message_for_context(klass, context)
