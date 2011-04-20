@@ -46,9 +46,10 @@ module ReadableExceptions
 
     context_key = context.first[0].to_s
     sub_context_key = context.first[1].to_s
+    klass_name = klass.name.to_s
 
-    if error_messages.has_key?(context_key) && error_messages[context_key].has_key?(klass.name.to_s) && error_messages[context_key][klass.name.to_s].has_key?(sub_context_key)
-      return error_messages[context_key][klass.name.to_s][sub_context_key.to_s]
+    if error_messages.has_key?(context_key) && error_messages[context_key].has_key?(klass_name) && error_messages[context_key][klass_name].has_key?(sub_context_key)
+      return error_messages[context_key][klass_name][sub_context_key]
     end
 
     message_for_context(klass.superclass, context)
