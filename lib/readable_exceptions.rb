@@ -13,12 +13,10 @@ module ReadableExceptions
   end
 
   def self.readable_message(exception, context = nil)
-    context = exception.message if context.nil?
-
+    context ||= exception.message
     return exception.message if ! valid_context?(context)
 
     readable_message = message_for_context(exception.class, context)
-
     return exception.message if readable_message.nil?
 
     readable_message
